@@ -3,10 +3,9 @@
 const {isFirstVisit} = useVisitor()
 
 
+const welcomeIsDone = ref(false);
+
 const content = [
-  '<span class="host">mohammd@website:~$</span> ls',
-  '<a href="/">./home</a>   <a href="/contact">./contact</a>',
-  '',
   '<span class="host">mohammd@website:~$</span> whoami',
   'Hey there, I am Mohammad.',
   '',
@@ -24,9 +23,13 @@ const content = [
 
 
 <template>
-{{ isFirstVisit }}
-  <Wellcome v-if="isFirstVisit" :text="content"/>
-  <Content v-else :text="content"/>
+
+  <Wellcome v-if="isFirstVisit" @ready="() => welcomeIsDone = true"/>
+
+  <template v-if="welcomeIsDone || !isFirstVisit">
+    <Navigation/>
+    <Content :text="content"/>
+  </template>
 
 </template>
 

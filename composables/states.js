@@ -7,7 +7,6 @@ export const useVisitor = () => {
 
     const markVisited = () => {
         cookie.value = false
-        isFirstVisit.value = false
     }
 
 

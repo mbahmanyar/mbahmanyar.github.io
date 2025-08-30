@@ -1,8 +1,10 @@
 <script setup>
 
-const {text} = defineProps({text: Array});
+
 
 const {isFirstVisit, markVisited} = useVisitor()
+
+const emits = defineEmits(['ready']);
 
 
 const banner = `<pre class="banner">
@@ -26,7 +28,7 @@ const topContent = [
 ];
 
 
-const lines = computed(() => [...topContent, ...text]);
+const lines = computed(() => [...topContent]);
 
 
 const displayText = ref('')
@@ -60,6 +62,8 @@ onMounted(async () => {
   await next();
 
   markVisited()
+
+  emits('ready')
 
 });
 </script>
