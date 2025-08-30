@@ -1,7 +1,6 @@
 <script setup>
 
 
-
 const {isFirstVisit, markVisited} = useVisitor()
 
 const emits = defineEmits(['ready']);
@@ -21,8 +20,11 @@ const banner = `<pre class="banner">
 const topContent = [
   `Last login: ${new Date().toDateString()} ${new Date().toTimeString().split(' ')[0]} on ttys000`,
   'Booting MohammadOS v3.0...',
-  'Loading modules: nuxt, github-pages, caffeine ☕',
-  '',
+  'Loading modules: Loading bunch of modules for you... Done. 😂',
+  '[■■□□□□□□□□] Initializing system...       10%',
+  '[■■■■□□□□□□] Starting services...          40%',
+  '[■■■■■■■■□□] Optimizing caffeine levels... 80%',
+  '[■■■■■■■■■■] Ready. Launching terminal...  100%',
   banner,
   '',
 ];
@@ -66,6 +68,8 @@ onMounted(async () => {
   emits('ready')
 
 });
+
+
 </script>
 
 <template>

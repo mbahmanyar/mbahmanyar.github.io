@@ -8,7 +8,7 @@
       <span class="btn red"></span>
       <span class="btn yellow"></span>
       <span class="btn green"></span>
-      <span class="title">Mohammad Terminal</span>
+      <span class="title">Terminal</span>
     </div>
     <div class="terminal-body">
       <slot/>

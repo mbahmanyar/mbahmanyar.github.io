@@ -2,6 +2,7 @@
 
 const {isFirstVisit} = useVisitor()
 
+const firstVisit = toValue(isFirstVisit)
 
 const welcomeIsDone = ref(false);
 
@@ -24,9 +25,9 @@ const content = [
 
 <template>
 
-  <Wellcome v-if="isFirstVisit" @ready="() => welcomeIsDone = true"/>
+  <Wellcome v-if="firstVisit" @ready="() => welcomeIsDone = true"/>
 
-  <template v-if="welcomeIsDone || !isFirstVisit">
+  <template v-if="welcomeIsDone || !firstVisit">
     <Navigation/>
     <Content :text="content"/>
   </template>
