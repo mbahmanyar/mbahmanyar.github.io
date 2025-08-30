@@ -1,11 +1,8 @@
-<script setup lang="ts">
+<script setup>
 
 const {text} = defineProps({text: Array});
 
-const firstLoad = useCookie('first-load', {
-  default: () => true,
-  maxAge: 60 * 60 * 24 * 365 // 1 year
-});
+const {isFirstVisit, markVisited} = useVisitor()
 
 
 const banner = `<pre class="banner">
@@ -32,48 +29,43 @@ const topContent = [
 const lines = computed(() => [...topContent, ...text]);
 
 
-
 const displayText = ref('')
 const typingSpeed = 10 // ms per character
 
-function typeLine(line, cb) {
-  let i = 0
-  const interval = setInterval(() => {
-    displayText.value += line[i] || ''
-    i++
-    if (i > line.length) {
-      clearInterval(interval)
-      displayText.value += '\n';
-      setTimeout(cb, 150)
-    }
-  }, typingSpeed)
+function typeLine(line) {
+  return new Promise((resolve) => {
+    let i = 0
+    const interval = setInterval(() => {
+      displayText.value += line[i] || ''
+      i++
+      if (i > line.length) {
+        clearInterval(interval)
+        displayText.value += '\n';
+        setTimeout(resolve, 150)
+      }
+    }, typingSpeed)
+  })
 }
 
 
-onMounted(() => {
+onMounted(async () => {
   let currentLine = 0
 
-  function next() {
-    if (!lines || !Array.isArray(lines.value)) {
-      return;
-    }
-
-    if (currentLine < lines.value.length) {
-      typeLine(lines.value[currentLine], () => {
-        currentLine++
-        next()
-      })
+  async function next() {
+    for (let i = 0; i < lines.value.length; i++) {
+      await typeLine(lines.value[i])
     }
   }
 
-  next();
-  firstLoad.value = false;
+  await next();
+
+  markVisited()
 
 });
 </script>
 
 <template>
-  <p v-html="displayText" />
+  <p v-html="displayText"/>
 </template>
 
 <style scoped></style>

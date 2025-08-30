@@ -1,12 +1,14 @@
 <script setup lang="ts">
 
+const {isFirstVisit} = useVisitor()
+
 
 const content = [
   '<span class="host">mohammd@website:~$</span> ls',
   '<a href="/">./home</a>   <a href="/contact">./contact</a>',
   '',
   '<span class="host">mohammd@website:~$</span> whoami',
-  'Hey ther, I am Mohammad.',
+  'Hey there, I am Mohammad.',
   '',
   'I’m a full-stack developer with 5+ years of experience turning creative ideas into reality in the cyber world. I\'m an expert in PHP/Laravel and Vue/Nuxt, and I have a slight passion for production side to help develop things people actually want to use because, let\'s face it, the world favors the useful ones.\n' +
   '\n' +
@@ -22,9 +24,9 @@ const content = [
 
 
 <template>
-
-  <Wellcome v-if="isFirstLoad" :text="content" />
-  <Content v-else :text="content" />
+{{ isFirstVisit }}
+  <Wellcome v-if="isFirstVisit" :text="content"/>
+  <Content v-else :text="content"/>
 
 </template>
 
